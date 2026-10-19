@@ -4,98 +4,224 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111827">
-<title>SWEDAN NFC | ربط كروت المحلات</title>
+<title>SWEDAN NFC | إنشاء روابط الدفع</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:#172033;background:#f3f5f8}
-*{box-sizing:border-box}body{margin:0;padding:20px;min-height:100vh}
-main{max-width:560px;margin:0 auto}.brand{font-size:13px;letter-spacing:.12em;color:#667085;font-weight:800;margin:8px 4px 14px}
-.card{background:#fff;border:1px solid #e4e7ec;border-radius:22px;padding:22px;margin:14px 0;box-shadow:0 8px 28px #1018280b}
-h1{font-size:25px;margin:0 0 8px}h2{font-size:19px;margin:0 0 14px}p{line-height:1.8;color:#586174;margin:8px 0}
-label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
-input{width:100%;padding:13px 12px;border:1px solid #cfd5df;border-radius:12px;font:inherit;background:#fff;color:#111827}
-button,.button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:13px 16px;font:inherit;font-weight:800;text-decoration:none;cursor:pointer}
-.primary{background:#111827;color:#fff;width:100%;margin-top:18px}.secondary{background:#eef2f6;color:#172033;width:100%;margin-top:10px}
-.green{background:#087f5b;color:white;width:100%;margin-top:12px}.blue{background:#165dce;color:white;width:100%;margin-top:12px}
-.note{background:#fff8e6;border:1px solid #f4d58d;padding:12px;border-radius:12px;font-size:13px;line-height:1.8;color:#704c00}
-.hidden{display:none!important}.muted{font-size:12px;color:#788295}.result{overflow-wrap:anywhere;background:#f3f5f8;border-radius:12px;padding:12px;font-size:13px;direction:ltr;text-align:left}
-.shopname{font-size:27px;font-weight:900;text-align:center;margin:6px 0}.tag{text-align:center;color:#667085;margin-bottom:16px}
-.num{direction:ltr;text-align:center;font-size:25px;font-weight:900;letter-spacing:.04em;padding:14px;background:#f7f8fa;border-radius:14px;margin:12px 0}
-footer{text-align:center;color:#8992a3;font-size:12px;padding:16px}
+:root{color-scheme:light;--ink:#172033;--muted:#667085;--line:#dfe4ec;--bg:#f3f5f9;--brand:#111827;--green:#087f5b;--blue:#165dce}
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+main{width:100%;max-width:620px;margin:0 auto}
+.brand{font-size:13px;letter-spacing:.13em;color:#667085;font-weight:900;margin:8px 4px 14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(16px,4vw,24px);margin:14px 0;box-shadow:0 8px 28px #1018280b}
+h1{font-size:clamp(22px,5vw,28px);line-height:1.4;margin:0 0 8px}
+h2{font-size:19px;margin:0 0 12px}
+p{line-height:1.85;color:#586174;margin:8px 0}
+label{display:block;font-size:14px;font-weight:800;margin:15px 0 7px}
+input,select{display:block;width:100%;min-height:48px;padding:12px;border:1px solid #cfd5df;border-radius:12px;font:inherit;background:#fff;color:#111827}
+input:focus,select:focus{outline:3px solid #165dce25;border-color:var(--blue)}
+button,.button{display:flex;align-items:center;justify-content:center;min-height:46px;border:0;border-radius:12px;padding:12px 16px;font:inherit;font-weight:800;text-decoration:none;cursor:pointer;text-align:center}
+button:focus-visible{outline:3px solid #165dce55;outline-offset:2px}
+.primary{background:var(--brand);color:#fff;width:100%;margin-top:20px}
+.secondary{background:#eef2f6;color:var(--ink);width:100%;margin-top:10px}
+.green{background:var(--green);color:white;width:100%;margin-top:12px}
+.blue{background:var(--blue);color:white;width:100%;margin-top:12px}
+.note{background:#fff8e6;border:1px solid #f4d58d;padding:12px;border-radius:12px;font-size:13px;line-height:1.85;color:#704c00;margin:14px 0}
+.info{background:#eef6ff;border:1px solid #cfe2ff;padding:12px;border-radius:12px;font-size:13px;line-height:1.8;color:#214b7c;margin:14px 0}
+.hidden{display:none!important}
+.muted{font-size:12px;color:#788295}
+.result{overflow-wrap:anywhere;background:#f3f5f8;border-radius:12px;padding:12px;font-size:13px;direction:ltr;text-align:left;user-select:text}
+.shopname{font-size:clamp(25px,6vw,32px);font-weight:900;text-align:center;margin:8px 0 4px;overflow-wrap:anywhere}
+.tag{text-align:center;color:#667085;margin-bottom:16px}
+.num{direction:ltr;text-align:center;font-size:clamp(20px,5vw,26px);font-weight:900;padding:14px;background:#f7f8fa;border-radius:14px;margin:12px 0;overflow-wrap:anywhere;user-select:text}
+.payment-mark{display:inline-block;background:#eef2f6;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+footer{text-align:center;color:#8992a3;font-size:12px;padding:18px 8px}
 </style>
 </head>
 <body>
 <main>
-<div class="brand">SWEDAN NFC</div>
-<section id="admin" class="card">
-<h1>إنشاء رابط كارت للمحل</h1>
-<p>اكتب بيانات المحل، ثم انسخ الرابط الناتج واكتبه على شريحة NFC باستخدام NFC Tools.</p>
-<div class="note">هذه الصفحة تعرض بيانات الدفع وتساعد العميل على نسخ الرقم. لا تنفّذ تحويلًا ماليًا ولا تضمن فتح شاشة التحويل والرقم معبّأ تلقائيًا.</div>
-<form id="maker">
-<label for="shop">اسم المحل *</label><input id="shop" required maxlength="80" placeholder="مثال: كافيه النور">
-<label for="vodafone">رقم فودافون كاش *</label><input id="vodafone" required inputmode="tel" maxlength="20" placeholder="01XXXXXXXXX">
-<label for="ipa">عنوان إنستا باي IPA (اختياري)</label><input id="ipa" maxlength="100" placeholder="مثال: shopname@instapay">
-<button class="primary" type="submit">إنشاء رابط المحل</button>
-</form>
-<div id="out" class="hidden">
-<label>رابط صفحة المحل — انسخه واكتبه على الكارت</label>
-<div id="link" class="result"></div>
-<button id="copylink" class="green" type="button">نسخ رابط المحل</button>
-<button id="openlink" class="secondary" type="button">فتح صفحة المحل للتجربة</button>
-<p class="muted">احتفظ بالرابط في ملاحظاتك لو احتجت تبرمج الكارت مرة أخرى. أي شخص يملك الرابط يستطيع رؤية بيانات الدفع المكتوبة فيه.</p>
-</div>
-</section>
-<section id="customer" class="card hidden">
-<div class="tag">الدفع للمحل</div>
-<div id="customerShop" class="shopname"></div>
-<p style="text-align:center">اختار طريقة الدفع واتبع التعليمات الظاهرة على موبايلك.</p>
-<div id="vodafoneBox" class="hidden">
-<h2>فودافون كاش</h2>
-<div id="customerVodafone" class="num"></div>
-<button id="copyVodafone" class="green" type="button">نسخ رقم فودافون كاش</button>
-<p>افتح خدمة فودافون كاش، وأدخل رقم المستلم والمبلغ، ثم راجع البيانات وأكّد التحويل بنفسك.</p>
-</div>
-<div id="ipaBox" class="hidden">
-<h2>إنستا باي</h2>
-<div id="customerIpa" class="num"></div>
-<button id="copyIpa" class="blue" type="button">نسخ عنوان IPA</button>
-<p>افتح إنستا باي، واستخدم عنوان الدفع للتحويل، ثم راجع اسم المستلم والمبلغ وأكّد العملية داخل التطبيق.</p>
-</div>
-<div class="note">تنبيه: تأكد دائمًا من اسم المستلم داخل تطبيق الدفع قبل تأكيد أي تحويل. لا تشارك الرقم السري أو رمز التحقق مع أي شخص.</div>
-<button id="back" class="secondary" type="button">رجوع لإنشاء رابط آخر</button>
-</section>
-<footer>صفحة تجريبية مجانية — لا تجمع المدفوعات ولا تحفظ قاعدة بيانات للمحلات.</footer>
+  <div class="brand">SWEDAN NFC</div>
+
+  <section id="admin" class="card">
+    <h1>إنشاء رابط دفع للكارت</h1>
+    <p>أدخل بيانات المحل واختر وسيلة الدفع التي تريد تخصيص هذا الكارت لها. بعد إنشاء الرابط، اكتبه على شريحة NFC واطبع QR يشير إلى الرابط نفسه إن أردت.</p>
+    <div class="note">تنبيه مهم: هذه الصفحة لا تنفّذ تحويلًا ماليًا ولا تحفظ سجلًا للمحلات. الرابط يحمل بيانات الدفع داخل عنوانه، لذلك أي شخص يملك الرابط يمكنه رؤيتها. لا تضع أي بيانات سرية أو كلمات مرور أو رموز تحقق.</div>
+
+    <form id="maker">
+      <label for="shop">اسم المحل أو النشاط التجاري *</label>
+      <input id="shop" name="shop" required maxlength="80" autocomplete="organization" placeholder="مثال: كافيه النور">
+
+      <label for="method">وسيلة الدفع لهذا الكارت *</label>
+      <select id="method" name="method" required>
+        <option value="instapay">إنستا باي (IPA)</option>
+        <option value="vodafone">فودافون كاش</option>
+        <option value="etisalat">اتصالات كاش</option>
+        <option value="orange">أورنج كاش</option>
+        <option value="we">وي كاش</option>
+      </select>
+
+      <label id="paymentLabel" for="paymentValue">عنوان إنستا باي IPA *</label>
+      <input id="paymentValue" name="paymentValue" required maxlength="120" autocomplete="off" placeholder="مثال: name@instapay" dir="auto" aria-describedby="paymentHelp">
+      <p id="paymentHelp" class="muted">اكتب بيانات المستلم الصحيحة كما تظهر في خدمة الدفع.</p>
+
+      <button class="primary" type="submit">إنشاء رابط الكارت</button>
+    </form>
+
+    <div id="out" class="hidden">
+      <label for="link">رابط صفحة العميل</label>
+      <div id="link" class="result" dir="ltr"></div>
+      <button id="copylink" class="green" type="button">نسخ الرابط</button>
+      <button id="openlink" class="secondary" type="button">تجربة صفحة العميل</button>
+      <p class="muted">احتفظ بالرابط في مكان آمن. إذا غيّرت بيانات المحل أو وسيلة الدفع، أنشئ رابطًا جديدًا واكتب الرابط الجديد على الكارت.</p>
+    </div>
+    <div id="error" class="note hidden" role="alert"></div>
+  </section>
+
+  <section id="customer" class="card hidden" aria-live="polite">
+    <div class="tag">بيانات الدفع للمحل</div>
+    <div id="customerShop" class="shopname"></div>
+    <p style="text-align:center"><span id="customerMethod" class="payment-mark"></span></p>
+    <div id="customerPayment" class="num" dir="auto"></div>
+    <button id="copyPayment" class="green" type="button">نسخ بيانات الدفع</button>
+    <p id="instructions"></p>
+    <div class="note">قبل تأكيد أي تحويل، راجع اسم المستلم وبياناته والمبلغ داخل تطبيق الدفع نفسه. هذه الصفحة لا تستقبل الأموال ولا تؤكد نجاح التحويل. لا تشارك الرقم السري أو رمز التحقق مع أي شخص.</div>
+    <button id="back" class="secondary" type="button">العودة إلى صفحة الإدارة</button>
+  </section>
+
+  <footer>SWEDAN NFC · أداة إنشاء روابط فقط · لا توجد قاعدة بيانات أو معالجة للمدفوعات</footer>
 </main>
 <script>
-const $ = id => document.getElementById(id);
-const params = new URLSearchParams(location.search);
-function cleanPhone(v){return v.replace(/[^\d+]/g,'').trim()}
-function showCustomer(){
- const shop=params.get('shop'), phone=params.get('v'), ipa=params.get('ipa');
- if(!shop || (!phone && !ipa)) return false;
- $('admin').classList.add('hidden'); $('customer').classList.remove('hidden');
- $('customerShop').textContent=shop;
- if(phone){$('vodafoneBox').classList.remove('hidden');$('customerVodafone').textContent=phone;}
- if(ipa){$('ipaBox').classList.remove('hidden');$('customerIpa').textContent=ipa;}
- return true;
-}
-let generated='';
-$('maker').addEventListener('submit',e=>{
- e.preventDefault();
- const shop=$('shop').value.trim(), phone=cleanPhone($('vodafone').value), ipa=$('ipa').value.trim();
- if(!/^(\+?20)?0?1[0125]\d{8}$/.test(phone.replace(/\s/g,''))){alert('راجع رقم الموبايل المصري واكتبه بشكل صحيح.');return;}
- const u=new URL(location.href);u.search='';
- u.searchParams.set('shop',shop);u.searchParams.set('v',phone);
- if(ipa)u.searchParams.set('ipa',ipa);
- generated=u.toString();
- $('link').textContent=generated;$('out').classList.remove('hidden');
-});
-$('copylink').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(generated);alert('تم نسخ الرابط.')}catch(e){prompt('انسخ الرابط من هنا:',generated)}});
-$('openlink').addEventListener('click',()=>window.open(generated,'_blank','noopener'));
-$('copyVodafone').addEventListener('click',()=>copyText(params.get('v')));
-$('copyIpa').addEventListener('click',()=>copyText(params.get('ipa')));
-$('back').addEventListener('click',()=>{location.href=location.pathname});
-async function copyText(v){try{await navigator.clipboard.writeText(v);alert('تم النسخ.')}catch(e){prompt('انسخ البيانات:',v)}}
-showCustomer();
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const methods = {
+    instapay: {name:'إنستا باي', label:'عنوان إنستا باي IPA *', placeholder:'مثال: name@instapay', help:'اكتب عنوان IPA الخاص بالمستلم وتأكد من كتابته حرفيًا بشكل صحيح.', instructions:'افتح تطبيق إنستا باي يدويًا، واستخدم عنوان IPA لإجراء التحويل. راجع اسم المستلم والمبلغ داخل التطبيق قبل التأكيد.'},
+    vodafone: {name:'فودافون كاش', label:'رقم محفظة فودافون كاش *', placeholder:'01XXXXXXXXX', help:'أدخل رقم محفظة المستلم المصري المكوّن من 11 رقمًا، مثل رقم يبدأ بـ 010.', instructions:'افتح خدمة أو تطبيق فودافون كاش يدويًا، وأدخل رقم المستلم والمبلغ. تأكد من اسم المستلم قبل تأكيد التحويل.'},
+    etisalat: {name:'اتصالات كاش', label:'رقم محفظة اتصالات كاش *', placeholder:'01XXXXXXXXX', help:'أدخل رقم محفظة المستلم المصري المكوّن من 11 رقمًا، مثل رقم يبدأ بـ 011.', instructions:'افتح خدمة أو تطبيق اتصالات كاش يدويًا، وأدخل رقم المستلم والمبلغ. تأكد من اسم المستلم قبل تأكيد التحويل.'},
+    orange: {name:'أورنج كاش', label:'رقم محفظة أورنج كاش *', placeholder:'01XXXXXXXXX', help:'أدخل رقم محفظة المستلم المصري المكوّن من 11 رقمًا، مثل رقم يبدأ بـ 012.', instructions:'افتح خدمة أو تطبيق أورنج كاش يدويًا، وأدخل رقم المستلم والمبلغ. تأكد من اسم المستلم قبل تأكيد التحويل.'},
+    we: {name:'وي كاش', label:'رقم محفظة وي كاش *', placeholder:'01XXXXXXXXX', help:'أدخل رقم محفظة المستلم المصري المكوّن من 11 رقمًا، مثل رقم يبدأ بـ 015.', instructions:'افتح خدمة أو تطبيق وي كاش يدويًا، وأدخل رقم المستلم والمبلغ. تأكد من اسم المستلم قبل تأكيد التحويل.'}
+  };
+  let generated = '';
+  let customerPaymentValue = '';
+
+  function showError(message) {
+    $('error').textContent = message;
+    $('error').classList.remove('hidden');
+  }
+  function clearError() {
+    $('error').textContent = '';
+    $('error').classList.add('hidden');
+  }
+  function cleanPhone(value) {
+    return value.replace(/[\s().-]/g, '');
+  }
+  function validEgyptianMobile(value, method) {
+    const phone = cleanPhone(value).replace(/^\+20/, '0').replace(/^0020/, '0');
+    const prefixes = {vodafone:'010', etisalat:'011', orange:'012', we:'015'};
+    return /^01[0125]\d{8}$/.test(phone) && phone.startsWith(prefixes[method]);
+  }
+  function updateMethodField() {
+    const m = methods[$('method').value];
+    $('paymentLabel').textContent = m.label;
+    $('paymentValue').placeholder = m.placeholder;
+    $('paymentValue').value = '';
+    $('paymentValue').inputMode = $('method').value === 'instapay' ? 'text' : 'tel';
+    $('paymentHelp').textContent = m.help;
+    $('paymentValue').setAttribute('aria-label', m.label.replace(' *',''));
+    clearError();
+  }
+  function safeBaseUrl() {
+    const u = new URL(location.href);
+    u.search = '';
+    u.hash = '';
+    return u;
+  }
+  function showCustomerFromUrl() {
+    const params = new URLSearchParams(location.search);
+    const shop = (params.get('shop') || '').trim();
+    const method = params.get('method') || '';
+    const value = (params.get('value') || '').trim();
+    if (!shop && !method && !value) return false;
+    if (!shop || !methods[method] || !value) {
+      $('admin').classList.remove('hidden');
+      showError('الرابط غير مكتمل أو غير صحيح. أنشئ الرابط مرة أخرى من صفحة الإدارة.');
+      return false;
+    }
+    $('admin').classList.add('hidden');
+    $('customer').classList.remove('hidden');
+    $('customerShop').textContent = shop;
+    $('customerMethod').textContent = methods[method].name;
+    $('customerPayment').textContent = value;
+    $('instructions').textContent = methods[method].instructions;
+    customerPaymentValue = value;
+    return true;
+  }
+  async function copyText(value, promptLabel) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+        alert('تم النسخ بنجاح.');
+        return;
+      }
+      throw new Error('Clipboard unavailable');
+    } catch (_) {
+      window.prompt(promptLabel + ' — حدّد النص وانسخه:', value);
+    }
+  }
+
+  $('method').addEventListener('change', updateMethodField);
+  $('maker').addEventListener('submit', event => {
+    event.preventDefault();
+    clearError();
+    const shop = $('shop').value.trim();
+    const method = $('method').value;
+    const rawValue = $('paymentValue').value.trim();
+    if (!shop || shop.length > 80) {
+      showError('اكتب اسم المحل بشكل صحيح، وبحد أقصى 80 حرفًا.');
+      return;
+    }
+    if (!rawValue) {
+      showError('اكتب بيانات وسيلة الدفع المختارة.');
+      return;
+    }
+    let value = rawValue;
+    if (method === 'instapay') {
+      // Basic format check only; this cannot verify that an IPA actually belongs to the recipient.
+      if (!/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/.test(value) || value.length > 100) {
+        showError('راجع عنوان IPA. أدخل عنوانًا بصيغة مثل name@instapay، وتأكد من العنوان الصحيح مع المستلم.');
+        return;
+      }
+    } else {
+      value = cleanPhone(value);
+      if (!validEgyptianMobile(value, method)) {
+        const expected = {vodafone:'010', etisalat:'011', orange:'012', we:'015'}[method];
+        showError('رقم المحفظة لا يطابق صيغة رقم الموبايل المصري المتوقعة لهذه الوسيلة. راجع الرقم؛ غالبًا يبدأ بـ ' + expected + ' ويتكون من 11 رقمًا.');
+        return;
+      }
+    }
+    const u = safeBaseUrl();
+    u.searchParams.set('shop', shop);
+    u.searchParams.set('method', method);
+    u.searchParams.set('value', value);
+    generated = u.toString();
+    $('link').textContent = generated;
+    $('out').classList.remove('hidden');
+    $('copylink').focus();
+  });
+  $('copylink').addEventListener('click', () => copyText(generated, 'انسخ رابط صفحة المحل'));
+  $('openlink').addEventListener('click', () => {
+    if (!generated) return;
+    window.open(generated, '_blank', 'noopener,noreferrer');
+  });
+  $('copyPayment').addEventListener('click', () => copyText(customerPaymentValue, 'انسخ بيانات الدفع'));
+  $('back').addEventListener('click', () => {
+    const u = new URL(location.href);
+    u.search = '';
+    u.hash = '';
+    location.href = u.toString();
+  });
+
+  updateMethodField();
+  showCustomerFromUrl();
+})();
 </script>
 </body>
 </html>
