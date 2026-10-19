@@ -8,14 +8,20 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 15px;
             color: #333;
+            transition: background 0.4s ease;
         }
+        /* خلفيات متدرجة خاصة بكل شركة */
+        body.vf-theme { background: linear-gradient(135deg, #b30000, #ff1a1a, #e60000); }
+        body.et-theme { background: linear-gradient(135deg, #00663b, #00ac69, #008751); }
+        body.or-theme { background: linear-gradient(135deg, #cc6000, #ff7900, #ff9933); }
+        body.we-theme { background: linear-gradient(135deg, #581c87, #7c3aed, #9333ea); }
+
         .card-container {
             background: #ffffff;
             width: 100%;
@@ -26,26 +32,26 @@
             text-align: center;
             margin: auto;
         }
-        /* دايرة اللوجو كأنها صورة بروفايل */
+        /* دايرة اللوجو */
         .logo-circle {
-            width: 95px;
-            height: 95px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             margin: 0 auto 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ffffff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.12);
             border: 3px solid #f1f3f5;
-            overflow: hidden;
-            padding: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
         }
-        .logo-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        .vf-bg { background-color: #e60000; }
+        .et-bg { background-color: #00ac69; }
+        .or-bg { background-color: #ff7900; }
+        .we-bg { background-color: #7c3aed; }
+
         .wallet-badge {
             font-size: 20px;
             font-weight: bold;
@@ -112,12 +118,12 @@
         }
     </style>
 </head>
-<body>
+<body id="pageBody">
 
 <div class="card-container">
-    <!-- دايرة اللوجو الرسمي -->
-    <div class="logo-circle">
-        <img id="netLogo" src="" alt="لوجو الشبكة">
+    <!-- دايرة اللوجو -->
+    <div class="logo-circle" id="logoBox">
+        <span id="netLogoText">NET</span>
     </div>
 
     <!-- اسم الشبكة ورقم التحويل -->
@@ -145,28 +151,40 @@
 
     let prefix = "*9*7*";
     let name = "محفظة إلكترونية";
-    let logoUrl = "";
+    let logoText = "PAY";
+    let bgClass = "vf-bg";
+    let themeClass = "vf-theme";
 
     if (phone.startsWith("010")) {
         name = "فودافون كاش";
         prefix = "*9*7*";
-        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/1/18/Vodafone_Logo.svg";
+        logoText = "VF";
+        bgClass = "vf-bg";
+        themeClass = "vf-theme";
     } else if (phone.startsWith("011")) {
         name = "اتصالات كاش (e&)";
         prefix = "*777*1*";
-        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6b/Etisalat_Logo.svg";
+        logoText = "e&";
+        bgClass = "et-bg";
+        themeClass = "et-theme";
     } else if (phone.startsWith("012")) {
         name = "أورنج كاش";
         prefix = "*115*1*";
-        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg";
+        logoText = "OR";
+        bgClass = "or-bg";
+        themeClass = "or-theme";
     } else if (phone.startsWith("015")) {
         name = "وي باي (WE Pay)";
         prefix = "*322*";
-        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/8/86/Telecom_Egypt_logo.svg";
+        logoText = "WE";
+        bgClass = "we-bg";
+        themeClass = "we-theme";
     }
 
     document.getElementById('netName').innerText = name;
-    document.getElementById('netLogo').src = logoUrl;
+    document.getElementById('netLogoText').innerText = logoText;
+    document.getElementById('logoBox').className = "logo-circle " + bgClass;
+    document.getElementById('pageBody').className = themeClass;
 
     function startPay(e) {
         const amt = document.getElementById('amount').value;
