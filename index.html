@@ -1,247 +1,231 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111827">
-<title>SWEDAN NFC</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:#f3f5f9;color:#172033;font-family:system-ui,Tahoma,Arial,sans-serif}
-main{max-width:620px;margin:auto}
-.brand{font-size:13px;font-weight:900;letter-spacing:3px;margin:8px 4px 16px}
-.card{background:white;border:1px solid #dfe4ec;border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 8px 28px #1018280b}
-h1{font-size:25px;margin:0 0 10px}p{line-height:1.8;color:#586174}
-label{display:block;font-weight:800;margin:14px 0 7px}
-input,select{width:100%;min-height:48px;padding:12px;border:1px solid #cfd5df;border-radius:12px;font:inherit;background:white}
-button,.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:47px;padding:12px;border:0;border-radius:12px;font:inherit;font-weight:800;text-decoration:none;text-align:center;cursor:pointer;margin-top:10px}
-.primary{background:#111827;color:white}.green{background:#087f5b;color:white}.blue{background:#165dce;color:white}.orange{background:#fff0d9;color:#8a4b00}.secondary{background:#eef2f6;color:#172033}
-.note{background:#fff8e6;border:1px solid #f4d58d;padding:12px;border-radius:12px;font-size:13px;line-height:1.8;color:#704c00;margin:14px 0}
-.info{background:#eef6ff;border:1px solid #cfe2ff;padding:12px;border-radius:12px;font-size:13px;line-height:1.8;color:#214b7c;margin:14px 0}
-.hidden{display:none!important}.muted{font-size:12px;color:#788295}
-.result{overflow-wrap:anywhere;background:#f3f5f8;border-radius:12px;padding:12px;font-size:13px;direction:ltr;text-align:left}
-.shopname{font-size:30px;font-weight:900;text-align:center;overflow-wrap:anywhere}
-.num{direction:ltr;text-align:center;font-size:23px;font-weight:900;padding:14px;background:#f7f8fa;border-radius:14px;margin:12px 0;overflow-wrap:anywhere}
-.tag{text-align:center;color:#667085}
-footer{text-align:center;color:#8992a3;font-size:12px;padding:18px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع للمحل - سويدان</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 5px;
+            color: #111;
+        }
+        .store-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        .wallet-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .wallet-title {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+        .phone-number {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #212529;
+            margin-bottom: 12px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-copy {
+            background-color: #198754;
+            color: white;
+        }
+        .btn-copy:active {
+            background-color: #146c43;
+        }
+        .form-group {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .btn-dial {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .btn-dial:active {
+            background-color: #0b5ed7;
+        }
+        .networks-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .net-btn {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            background: #fff;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .net-btn.active {
+            border-color: #0d6efd;
+            background-color: #e7f1ff;
+            color: #0d6efd;
+        }
+        .note {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+        .security-badge {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-top: 15px;
+            border: 1px solid #ffeeba;
+        }
+    </style>
 </head>
 <body>
-<main>
-<div class="brand">SWEDAN NFC</div>
 
-<section id="admin" class="card">
-<h1>إنشاء رابط كارت المحل</h1>
-<p>أنشئ رابطًا خاصًا بوسيلة الدفع للمحل، ثم اكتبه على كارت NFC.</p>
-<div class="note">لا تدخل أي رقم سري أو كلمة مرور هنا. الرابط يعرض بيانات الدفع التي تكتبها.</div>
+    <div class="container">
+        <div style="font-size: 13px; color: #6c757d;">الدفع للمحل</div>
+        <div class="store-name">سويدان</div>
 
-<form id="maker">
-<label for="shop">اسم المحل *</label>
-<input id="shop" required maxlength="80" placeholder="اسم المحل أو المركز">
+        <div class="networks-container">
+            <button class="net-btn active" onclick="setNetwork('vodafone', '*9*7*')">فودافون كاش</button>
+            <button class="net-btn" onclick="setNetwork('etisalat', '*777*1*')">اتصالات كاش</button>
+            <button class="net-btn" onclick="setNetwork('orange', '*115*1*')">أورنج كاش</button>
+            <button class="net-btn" onclick="setNetwork('we', '*322*')">وي باي</button>
+        </div>
 
-<label for="method">وسيلة الدفع *</label>
-<select id="method">
-<option value="vodafone">فودافون كاش</option>
-<option value="instapay">إنستا باي</option>
-<option value="etisalat">اتصالات كاش</option>
-<option value="orange">أورنج كاش</option>
-<option value="we">وي كاش</option>
-</select>
+        <div class="wallet-box">
+            <div class="wallet-title" id="walletLabel">رقم فودافون كاش</div>
+            <div class="phone-number" id="storePhone">01011617901</div>
+            <button class="btn btn-copy" onclick="copyData()">نسخ بيانات الدفع</button>
+        </div>
 
-<label id="valueLabel" for="payvalue">رقم محفظة فودافون كاش *</label>
-<input id="payvalue" required maxlength="120" placeholder="01XXXXXXXXX" dir="auto">
-<p id="fieldHelp" class="muted">اكتب بيانات المستلم الصحيحة.</p>
-<button class="primary" type="submit">إنشاء رابط المحل</button>
-</form>
+        <div class="form-group">
+            <label for="amount">مبلغ التحويل بالجنيه *</label>
+            <input type="number" id="amount" placeholder="مثلاً: 100" inputmode="numeric">
+        </div>
 
-<div id="error" class="note hidden"></div>
-<div id="output" class="hidden">
-<label>رابط صفحة العميل</label>
-<div id="generatedLink" class="result"></div>
-<button id="copyLink" class="green" type="button">نسخ الرابط</button>
-<a id="testLink" class="btn secondary" target="_blank" rel="noopener">تجربة صفحة العميل</a>
-<p class="muted">بعد التأكد من الرابط، اكتبه على كارت NFC باستخدام NFC Tools.</p>
-</div>
-</section>
+        <a href="#" id="dialLink" class="btn btn-dial" onclick="triggerDial(event)">فتح شاشة الاتصال بالكود</a>
 
-<section id="customer" class="card hidden">
-<div class="tag">الدفع للمحل</div>
-<div id="customerShop" class="shopname"></div>
-<p id="customerMethod" style="text-align:center;font-weight:800"></p>
-<div id="customerValue" class="num"></div>
-<button id="copyPayment" class="green" type="button">نسخ بيانات الدفع</button>
+        <div class="security-badge">
+            لن يطلب منك هذا الموقع الرقم السري. أدخل الرقم السري فقط داخل خدمة الدفع الرسمية إذا طلبته منك. راجع اسم المستلم والمبلغ قبل التأكيد.
+        </div>
 
-<div id="amountArea">
-<label for="amount">مبلغ التحويل بالجنيه *</label>
-<input id="amount" inputmode="decimal" type="number" min="1" max="100000" step="0.01" placeholder="اكتب المبلغ بنفسك">
-</div>
+        <div class="note">
+            راجع الكود قبل استخدامه. قد لا تدعم بعض الهواتف فتح أكواد الخدمة من رابط.
+        </div>
+    </div>
 
-<div id="vodafoneActions" class="hidden">
-<button id="copyCode" class="blue" type="button">تجهيز ونسخ كود فودافون كاش</button>
-<a id="dialCode" class="btn orange" href="#">فتح شاشة الاتصال بالكود</a>
-<p class="muted">راجع الكود قبل استخدامه. قد لا تدعم بعض الهواتف فتح أكواد الخدمة من رابط.</p>
-</div>
+    <script>
+        const storeNumber = "01011617901";
+        let currentPrefix = "*9*7*";
+        let netName = "فودافون كاش";
 
-<div id="otherActions" class="hidden">
-<button id="openInstructions" class="blue" type="button">عرض تعليمات الدفع</button>
-<p id="instructions"></p>
-</div>
+        function setNetwork(network, prefix) {
+            currentPrefix = prefix;
+            
+            // تحديث الأزرار النشطة
+            const buttons = document.querySelectorAll('.net-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-<div class="note">
-لن يطلب منك هذا الموقع الرقم السري. أدخل الرقم السري فقط داخل خدمة الدفع الرسمية إذا طلبته منك. راجع اسم المستلم والمبلغ قبل التأكيد.
-</div>
-<button id="back" class="secondary" type="button">العودة للإدارة</button>
-</section>
+            // تحديث النصوص
+            if(network === 'vodafone') {
+                netName = "فودافون كاش";
+            } else if(network === 'etisalat') {
+                netName = "اتصالات كاش";
+            } else if(network === 'orange') {
+                netName = "أورنج كاش";
+            } else if(network === 'we') {
+                netName = "وي باي";
+            }
+            document.getElementById('walletLabel').innerText = "رقم " + netName;
+        }
 
-<footer>SWEDAN NFC · أداة روابط فقط · لا تنفذ تحويلات مالية</footer>
-</main>
+        function copyData() {
+            navigator.clipboard.writeText(storeNumber);
+            alert("تم نسخ رقم المحفظة: " + storeNumber);
+        }
 
-<script>
-(() => {
-'use strict';
-const $ = id => document.getElementById(id);
-const methods = {
-vodafone:{name:'فودافون كاش',label:'رقم محفظة فودافون كاش *',placeholder:'01XXXXXXXXX',help:'اكتب رقم المحفظة كما أعطاه لك صاحب المحل.'},
-instapay:{name:'إنستا باي',label:'عنوان إنستا باي IPA *',placeholder:'name@instapay',help:'اكتب عنوان IPA الصحيح للمستلم.'},
-etisalat:{name:'اتصالات كاش',label:'رقم محفظة اتصالات كاش *',placeholder:'01XXXXXXXXX',help:'اكتب رقم المحفظة الصحيح.'},
-orange:{name:'أورنج كاش',label:'رقم محفظة أورنج كاش *',placeholder:'01XXXXXXXXX',help:'اكتب رقم المحفظة الصحيح.'},
-we:{name:'وي كاش',label:'رقم محفظة وي كاش *',placeholder:'01XXXXXXXXX',help:'اكتب رقم المحفظة الصحيح.'}
-};
-let paymentValue = '';
-let paymentMethod = '';
+        function triggerDial(e) {
+            const amount = document.getElementById('amount').value;
+            if (!amount) {
+                alert("يرجى إدخال مبلغ التحويل أولاً!");
+                e.preventDefault();
+                return;
+            }
 
-function error(message){
-  $('error').textContent=message;
-  $('error').classList.remove('hidden');
-}
-function clearError(){
-  $('error').textContent='';
-  $('error').classList.add('hidden');
-}
-function baseUrl(){
-  const u=new URL(location.href);
-  u.search='';
-  u.hash='';
-  return u;
-}
-function updateField(){
-  const m=methods[$('method').value];
-  $('valueLabel').textContent=m.label;
-  $('payvalue').placeholder=m.placeholder;
-  $('fieldHelp').textContent=m.help;
-  $('payvalue').value='';
-  clearError();
-}
-async function copyText(text,label){
-  try{
-    if(navigator.clipboard && window.isSecureContext){
-      await navigator.clipboard.writeText(text);
-      alert('تم النسخ.');
-      return;
-    }
-  }catch(e){}
-  window.prompt(label+' — انسخ النص من هنا:',text);
-}
-function validValue(method,value){
-  if(method==='instapay'){
-    return /^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/.test(value);
-  }
-  const phone=value.replace(/[\s().-]/g,'').replace(/^\+20/,'0').replace(/^0020/,'0');
-  return /^01[0125]\d{8}$/.test(phone);
-}
-function renderCustomer(){
-  const p=new URLSearchParams(location.search);
-  const shop=(p.get('shop')||'').trim();
-  const method=p.get('method')||'';
-  const value=(p.get('value')||'').trim();
-  if(!shop&&!method&&!value)return;
-  if(!shop||!methods[method]||!value){
-    error('الرابط غير مكتمل. أنشئ رابطًا جديدًا من صفحة الإدارة.');
-    return;
-  }
-  paymentValue=value;
-  paymentMethod=method;
-  $('admin').classList.add('hidden');
-  $('customer').classList.remove('hidden');
-  $('customerShop').textContent=shop;
-  $('customerMethod').textContent=methods[method].name;
-  $('customerValue').textContent=value;
+            let ussdCode = "";
+            if (currentPrefix === "*322*") {
+                // WE Pay format: *322*Number*Amount#
+                ussdCode = `${currentPrefix}${storeNumber}*${amount}#`;
+            } else {
+                // Vodafone, Etisalat, Orange format: *Code*Number*Amount#
+                ussdCode = `${currentPrefix}${storeNumber}*${amount}#`;
+            }
 
-  if(method==='vodafone'){
-    $('vodafoneActions').classList.remove('hidden');
-    $('otherActions').classList.add('hidden');
-  }else{
-    $('otherActions').classList.remove('hidden');
-    $('vodafoneActions').classList.add('hidden');
-    const messages={
-      instapay:'افتح تطبيق InstaPay يدويًا، ثم أدخل عنوان IPA والمبلغ. راجع اسم المستلم قبل التأكيد.',
-      etisalat:'افتح خدمة اتصالات كاش الرسمية، وأدخل رقم المستلم والمبلغ.',
-      orange:'افتح خدمة أورنج كاش الرسمية، وأدخل رقم المستلم والمبلغ.',
-      we:'افتح خدمة WE Pay الرسمية، وأدخل رقم المستلم والمبلغ.'
-    };
-    $('instructions').textContent=messages[method];
-  }
-}
-function makeVodafoneCode(){
-  const amount=Number($('amount').value);
-  if(!Number.isFinite(amount)||amount<=0){
-    alert('اكتب مبلغًا صحيحًا أولًا.');
-    return '';
-  }
-  if(!/^\d{11}$/.test(paymentValue.replace(/\D/g,''))){
-    alert('راجع رقم محفظة المستلم.');
-    return '';
-  }
-  // صيغة الخدمة تحتاج التأكد من شركة الاتصالات قبل الاعتماد عليها.
-  return '*9*7*'+paymentValue.replace(/\D/g,'')+'*'+String(amount)+'#';
-}
-$('method').addEventListener('change',updateField);
-$('maker').addEventListener('submit',e=>{
-  e.preventDefault();
-  clearError();
-  const shop=$('shop').value.trim();
-  const method=$('method').value;
-  const value=$('payvalue').value.trim();
-  if(!shop||!value){error('اكتب البيانات المطلوبة.');return;}
-  if(!validValue(method,value)){
-    error(method==='instapay'
-      ?'راجع عنوان IPA المكتوب.'
-      :'راجع رقم الموبايل المصري؛ يجب أن يتكون من 11 رقمًا.');
-    return;
-  }
-  const u=baseUrl();
-  u.searchParams.set('shop',shop);
-  u.searchParams.set('method',method);
-  u.searchParams.set('value',value);
-  $('generatedLink').textContent=u.toString();
-  $('testLink').href=u.toString();
-  $('output').classList.remove('hidden');
-});
-$('copyLink').addEventListener('click',()=>copyText($('generatedLink').textContent,'انسخ الرابط'));
-$('copyPayment').addEventListener('click',()=>copyText(paymentValue,'انسخ بيانات الدفع'));
+            // ترميز العلامات لتعمل بشكل صحيح في روابط الاتصال
+            const encodedUssd = ussdCode.replace(/#/g, "%23").replace(/\*/g, "*");
+            this.document.getElementById('dialLink').href = `tel:${encodedUssd}`;
+        }
+    </script>
 
-$('copyCode').addEventListener('click',()=>{
-  const code=makeVodafoneCode();
-  if(code)copyText(code,'انسخ كود الخدمة');
-});
-$('dialCode').addEventListener('click',e=>{
-  e.preventDefault();
-  const code=makeVodafoneCode();
-  if(!code)return;
-  // فتح شاشة الاتصال لا يضمن أن الهاتف يقبل كود USSD.
-  location.href='tel:'+encodeURIComponent(code);
-});
-$('openInstructions').addEventListener('click',()=>{
-  alert('افتح تطبيق أو خدمة الدفع الرسمية يدويًا، ثم أدخل بيانات المستلم والمبلغ. لا تدخل الرقم السري في هذا الموقع.');
-});
-$('back').addEventListener('click',()=>{
-  const u=baseUrl();
-  location.href=u.toString();
-});
-updateField();
-renderCustomer();
-})();
-</script>
 </body>
 </html>
