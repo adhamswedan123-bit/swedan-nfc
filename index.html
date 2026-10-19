@@ -16,7 +16,7 @@
             color: #333;
             transition: background 0.4s ease;
         }
-        /* خلفيات متدرجة خاصة بكل شركة */
+        /* خلفيات متدرجة بلون كل شركة */
         body.vf-theme { background: linear-gradient(135deg, #b30000, #ff1a1a, #e60000); }
         body.et-theme { background: linear-gradient(135deg, #00663b, #00ac69, #008751); }
         body.or-theme { background: linear-gradient(135deg, #cc6000, #ff7900, #ff9933); }
@@ -32,25 +32,26 @@
             text-align: center;
             margin: auto;
         }
-        /* دايرة اللوجو */
+        /* دايرة البروفايل للوجو */
         .logo-circle {
-            width: 85px;
-            height: 85px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             margin: 0 auto 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
             border: 3px solid #f1f3f5;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
+            overflow: hidden;
+            padding: 8px;
         }
-        .vf-bg { background-color: #e60000; }
-        .et-bg { background-color: #00ac69; }
-        .or-bg { background-color: #ff7900; }
-        .we-bg { background-color: #7c3aed; }
+        .logo-circle img, .logo-circle svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
         .wallet-badge {
             font-size: 20px;
@@ -118,16 +119,14 @@
         }
     </style>
 </head>
-<body id="pageBody">
+<body id="pageBody" class="vf-theme">
 
 <div class="card-container">
     <!-- دايرة اللوجو -->
-    <div class="logo-circle" id="logoBox">
-        <span id="netLogoText">NET</span>
-    </div>
+    <div class="logo-circle" id="logoBox"></div>
 
-    <!-- اسم الشبكة ورقم التحويل -->
-    <div class="wallet-badge" id="netName">جاري تحديد الشبكة...</div>
+    <!-- اسم المحفظة ورقم الهاتف -->
+    <div class="wallet-badge" id="netName">فودافون كاش</div>
     <div class="phone-display" id="displayPhone">01000000000</div>
 
     <!-- إدخال المبلغ -->
@@ -136,7 +135,7 @@
         <input type="number" id="amount" class="amount-input" placeholder="أدخل المبلغ هنا" inputmode="numeric">
     </div>
 
-    <!-- زر الاتصال -->
+    <!-- زر فتح شاشة الاتصال -->
     <a href="#" id="payBtn" class="btn-pay" onclick="startPay(event)">فتح شاشة الاتصال</a>
 
     <div class="security-note">
@@ -145,45 +144,47 @@
 </div>
 
 <script>
+    // الشعارات الرسمية المتجهة المباشرة بدون الاعتماد على مواقع خارجية
+    const logos = {
+        vf: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" fill="#e60000"/><path d="M50 20C35 20 25 32 25 47c0 16 13 28 28 28 12 0 22-8 22-20 0-11-8-17-18-17-7 0-12 4-12 10 0 5 4 8 8 8 3 0 5-2 5-5 0-3-2-4-4-4-1 0-2 1-2 1 0-3 3-5 6-5 4 0 7 3 7 8 0 7-6 12-14 12-10 0-17-8-17-19 0-11 7-20 17-20 8 0 14 5 14 12h8c0-11-9-19-22-19z" fill="#ffffff"/></svg>`,
+        et: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="50" fill="#ffffff"/><path d="M20 30h60v15H35v10h40v15H35v10h45v15H20V30z" fill="#00ac69"/></svg>`,
+        or: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="50" fill="#ff7900"/><path d="M30 30l20 20-20 20M50 30l20 20-20 20" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
+        we: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" fill="#7c3aed"/><text x="50" y="62" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">we</text></svg>`
+    };
+
     const urlParams = new URLSearchParams(window.location.search);
-    const phone = urlParams.get('phone') || "01011617901";
+    const phone = urlParams.get('phone') || "01005585060";
     document.getElementById('displayPhone').innerText = phone;
 
     let prefix = "*9*7*";
-    let name = "محفظة إلكترونية";
-    let logoText = "PAY";
-    let bgClass = "vf-bg";
+    let name = "فودافون كاش";
     let themeClass = "vf-theme";
+    let logoSvg = logos.vf;
 
     if (phone.startsWith("010")) {
         name = "فودافون كاش";
         prefix = "*9*7*";
-        logoText = "VF";
-        bgClass = "vf-bg";
         themeClass = "vf-theme";
+        logoSvg = logos.vf;
     } else if (phone.startsWith("011")) {
         name = "اتصالات كاش (e&)";
         prefix = "*777*1*";
-        logoText = "e&";
-        bgClass = "et-bg";
         themeClass = "et-theme";
+        logoSvg = logos.et;
     } else if (phone.startsWith("012")) {
         name = "أورنج كاش";
         prefix = "*115*1*";
-        logoText = "OR";
-        bgClass = "or-bg";
         themeClass = "or-theme";
+        logoSvg = logos.or;
     } else if (phone.startsWith("015")) {
         name = "وي باي (WE Pay)";
         prefix = "*322*";
-        logoText = "WE";
-        bgClass = "we-bg";
         themeClass = "we-theme";
+        logoSvg = logos.we;
     }
 
     document.getElementById('netName').innerText = name;
-    document.getElementById('netLogoText').innerText = logoText;
-    document.getElementById('logoBox').className = "logo-circle " + bgClass;
+    document.getElementById('logoBox').innerHTML = logoSvg;
     document.getElementById('pageBody').className = themeClass;
 
     function startPay(e) {
