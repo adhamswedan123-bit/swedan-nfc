@@ -13,32 +13,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             color: #333;
         }
         .card-container {
             background: #ffffff;
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             text-align: center;
+            margin: auto;
         }
-        /* دايرة اللوجو الرسمي */
+        /* دايرة اللوجو كأنها صورة بروفايل */
         .logo-circle {
-            width: 90px;
-            height: 90px;
+            width: 95px;
+            height: 95px;
             border-radius: 50%;
             margin: 0 auto 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f8f9fa;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            border: 3px solid #fff;
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            border: 3px solid #f1f3f5;
             overflow: hidden;
-            padding: 10px;
+            padding: 12px;
         }
         .logo-circle img {
             width: 100%;
@@ -46,22 +47,17 @@
             object-fit: contain;
         }
         .wallet-badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 50px;
+            font-size: 20px;
             font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 10px;
-            background-color: #e7f1ff;
-            color: #0d6efd;
-            border: 1px solid #b6d4fe;
+            color: #1a1a1a;
+            margin-bottom: 8px;
         }
         .phone-display {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             letter-spacing: 1px;
-            color: #212529;
-            margin-bottom: 25px;
+            color: #0d6efd;
+            margin-bottom: 20px;
             direction: ltr;
         }
         .input-group {
@@ -70,7 +66,7 @@
         }
         .input-group label {
             display: block;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             color: #495057;
             margin-bottom: 8px;
@@ -119,21 +115,22 @@
 <body>
 
 <div class="card-container">
-    <!-- دايرة اللوجو الرسمي للشبكة -->
+    <!-- دايرة اللوجو الرسمي -->
     <div class="logo-circle">
         <img id="netLogo" src="" alt="لوجو الشبكة">
     </div>
 
-    <!-- اسم المحفظة والرقم -->
-    <div class="wallet-badge" id="netName">جاري التحديد...</div>
+    <!-- اسم الشبكة ورقم التحويل -->
+    <div class="wallet-badge" id="netName">جاري تحديد الشبكة...</div>
     <div class="phone-display" id="displayPhone">01000000000</div>
 
-    <!-- ادخال المبلغ -->
+    <!-- إدخال المبلغ -->
     <div class="input-group">
         <label for="amount">مبلغ التحويل (بالجنيه):</label>
         <input type="number" id="amount" class="amount-input" placeholder="أدخل المبلغ هنا" inputmode="numeric">
     </div>
 
+    <!-- زر الاتصال -->
     <a href="#" id="payBtn" class="btn-pay" onclick="startPay(event)">فتح شاشة الاتصال</a>
 
     <div class="security-note">
@@ -148,16 +145,14 @@
 
     let prefix = "*9*7*";
     let name = "محفظة إلكترونية";
-    
-    // الشعارات الرسمية المتجهة (SVG High Quality)
-    let logoUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg";
+    let logoUrl = "";
 
     if (phone.startsWith("010")) {
         name = "فودافون كاش";
         prefix = "*9*7*";
-        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg";
+        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/1/18/Vodafone_Logo.svg";
     } else if (phone.startsWith("011")) {
-        name = "اتصالات كاش";
+        name = "اتصالات كاش (e&)";
         prefix = "*777*1*";
         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6b/Etisalat_Logo.svg";
     } else if (phone.startsWith("012")) {
@@ -165,7 +160,7 @@
         prefix = "*115*1*";
         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg";
     } else if (phone.startsWith("015")) {
-        name = "وي باي";
+        name = "وي باي (WE Pay)";
         prefix = "*322*";
         logoUrl = "https://upload.wikimedia.org/wikipedia/commons/8/86/Telecom_Egypt_logo.svg";
     }
