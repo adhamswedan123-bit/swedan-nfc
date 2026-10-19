@@ -5,30 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدفع السريع</title>
     <style>
-        body { font-family: Tahoma, sans-serif; background: #f4f6f9; text-align: center; padding: 40px; }
-        .box { background: #fff; padding: 25px; border-radius: 12px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h2 { color: #0d6efd; }
-        .phone { font-size: 26px; font-weight: bold; margin: 15px 0; color: #333; }
-        input { width: 100%; padding: 12px; font-size: 18px; text-align: center; box-sizing: border-box; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; }
-        .btn { display: block; width: 100%; padding: 14px; background: #0d6efd; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        .card-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+        /* تصميم أيقونات الشركات الأربع */
+        .logos-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .mini-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .vodafone { background-color: #e60000; }
+        .etisalat { background-color: #00ac69; }
+        .orange { background-color: #ff7900; }
+        .we { background-color: #7c3aed; }
+
+        .store-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        .wallet-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 12px;
+            background-color: #e7f1ff;
+            color: #0d6efd;
+            border: 1px solid #b6d4fe;
+        }
+        .phone-display {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #212529;
+            margin-bottom: 20px;
+            direction: ltr;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 6px;
+        }
+        .amount-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid #ced4da;
+            border-radius: 12px;
+            outline: none;
+            background-color: #f8f9fa;
+        }
+        .amount-input:focus {
+            border-color: #0d6efd;
+            background-color: #fff;
+        }
+        .btn-pay {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.35);
+        }
+        .security-note {
+            font-size: 11px;
+            color: #856404;
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 18px;
+            border: 1px solid #ffeeba;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h2>الدفع السريع</h2>
-    <div id="netName" style="font-weight: bold; color: #555; font-size: 16px;">جاري تحديد الشبكة...</div>
-    <div class="phone" id="displayPhone">---</div>
+<div class="card-container">
+    <!-- شعارات الشركات الأربع فوق -->
+    <div class="logos-row">
+        <div class="mini-logo vodafone" title="فودافون">VF</div>
+        <div class="mini-logo etisalat" title="اتصالات">ET</div>
+        <div class="mini-logo orange" title="أورنج">OR</div>
+        <div class="mini-logo we" title="وي">WE</div>
+    </div>
+    
+    <!-- اسم المحل ديناميكي -->
+    <div class="store-title" id="storeName">جاري تحميل الاسم...</div>
+    <div class="subtitle">خدمة التحويل الإلكتروني السريع</div>
 
-    <input type="number" id="amount" placeholder="أدخل مبلغ التحويل بالجنيه" inputmode="numeric">
+    <!-- المحفظة والرقم -->
+    <div class="wallet-badge" id="netName">جاري تحديد الشبكة...</div>
+    <div class="phone-display" id="displayPhone">01000000000</div>
 
-    <a href="#" id="payBtn" class="btn" onclick="startPay(event)">فتح شاشة الاتصال</a>
+    <!-- المبلغ -->
+    <div class="input-group">
+        <label for="amount">مبلغ التحويل (بالجنيه):</label>
+        <input type="number" id="amount" class="amount-input" placeholder="أدخل المبلغ هنا" inputmode="numeric">
+    </div>
+
+    <a href="#" id="payBtn" class="btn-pay" onclick="startPay(event)">فتح شاشة الاتصال</a>
+
+    <div class="security-note">
+        🔒 تحويل مباشر وآمن عن طريق كود الخدمة الرسمية لشبكتك.
+    </div>
 </div>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
+    
+    // التقاط رقم التليفون أو وضع رقم افتراضي
     const phone = urlParams.get('phone') || "01011617901";
     document.getElementById('displayPhone').innerText = phone;
+
+    // التقاط اسم المحل من اللينك (لو مش مكتوب يكتب "الدفع السريع")
+    const storeName = urlParams.get('name') || "الدفع السريع";
+    document.getElementById('storeName').innerText = storeName;
 
     let prefix = "*9*7*";
     let name = "محفظة إلكترونية";
@@ -37,7 +181,7 @@
         name = "فودافون كاش";
         prefix = "*9*7*";
     } else if (phone.startsWith("011")) {
-        name.name = "اتصالات كاش";
+        name = "اتصالات كاش";
         prefix = "*777*1*";
     } else if (phone.startsWith("012")) {
         name = "أورنج كاش";
@@ -52,7 +196,7 @@
     function startPay(e) {
         const amt = document.getElementById('amount').value;
         if (!amt) {
-            alert("اكتب المبلغ الاول!");
+            alert("يرجى كتابة المبلغ أولاً!");
             e.preventDefault();
             return;
         }
