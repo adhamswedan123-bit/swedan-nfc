@@ -21,52 +21,37 @@
             width: 100%;
             max-width: 380px;
             border-radius: 20px;
-            padding: 25px 20px;
+            padding: 30px 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             text-align: center;
         }
-        /* تصميم أيقونات الشركات الأربع */
-        .logos-row {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .mini-logo {
-            width: 32px;
-            height: 32px;
+        /* دايرة اللوجو الرسمي */
+        .logo-circle {
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
+            margin: 0 auto 15px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            background: #f8f9fa;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+            overflow: hidden;
+            padding: 10px;
         }
-        .vodafone { background-color: #e60000; }
-        .etisalat { background-color: #00ac69; }
-        .orange { background-color: #ff7900; }
-        .we { background-color: #7c3aed; }
-
-        .store-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1a1a1a;
-            margin-bottom: 4px;
-        }
-        .subtitle {
-            font-size: 13px;
-            color: #6c757d;
-            margin-bottom: 20px;
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         .wallet-badge {
             display: inline-block;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 12px;
+            font-size: 15px;
+            margin-bottom: 10px;
             background-color: #e7f1ff;
             color: #0d6efd;
             border: 1px solid #b6d4fe;
@@ -76,7 +61,7 @@
             font-weight: bold;
             letter-spacing: 1px;
             color: #212529;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             direction: ltr;
         }
         .input-group {
@@ -88,7 +73,7 @@
             font-size: 13px;
             font-weight: bold;
             color: #495057;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .amount-input {
             width: 100%;
@@ -125,7 +110,7 @@
             background-color: #fff3cd;
             padding: 10px;
             border-radius: 8px;
-            margin-top: 18px;
+            margin-top: 20px;
             border: 1px solid #ffeeba;
             line-height: 1.4;
         }
@@ -134,23 +119,16 @@
 <body>
 
 <div class="card-container">
-    <!-- شعارات الشركات الأربع فوق -->
-    <div class="logos-row">
-        <div class="mini-logo vodafone" title="فودافون">VF</div>
-        <div class="mini-logo etisalat" title="اتصالات">ET</div>
-        <div class="mini-logo orange" title="أورنج">OR</div>
-        <div class="mini-logo we" title="وي">WE</div>
+    <!-- دايرة اللوجو الرسمي للشبكة -->
+    <div class="logo-circle">
+        <img id="netLogo" src="" alt="لوجو الشبكة">
     </div>
-    
-    <!-- اسم المحل ديناميكي -->
-    <div class="store-title" id="storeName">جاري تحميل الاسم...</div>
-    <div class="subtitle">خدمة التحويل الإلكتروني السريع</div>
 
-    <!-- المحفظة والرقم -->
-    <div class="wallet-badge" id="netName">جاري تحديد الشبكة...</div>
+    <!-- اسم المحفظة والرقم -->
+    <div class="wallet-badge" id="netName">جاري التحديد...</div>
     <div class="phone-display" id="displayPhone">01000000000</div>
 
-    <!-- المبلغ -->
+    <!-- ادخال المبلغ -->
     <div class="input-group">
         <label for="amount">مبلغ التحويل (بالجنيه):</label>
         <input type="number" id="amount" class="amount-input" placeholder="أدخل المبلغ هنا" inputmode="numeric">
@@ -165,33 +143,35 @@
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // التقاط رقم التليفون أو وضع رقم افتراضي
     const phone = urlParams.get('phone') || "01011617901";
     document.getElementById('displayPhone').innerText = phone;
 
-    // التقاط اسم المحل من اللينك (لو مش مكتوب يكتب "الدفع السريع")
-    const storeName = urlParams.get('name') || "الدفع السريع";
-    document.getElementById('storeName').innerText = storeName;
-
     let prefix = "*9*7*";
     let name = "محفظة إلكترونية";
+    
+    // الشعارات الرسمية المتجهة (SVG High Quality)
+    let logoUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg";
 
     if (phone.startsWith("010")) {
         name = "فودافون كاش";
         prefix = "*9*7*";
+        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg";
     } else if (phone.startsWith("011")) {
         name = "اتصالات كاش";
         prefix = "*777*1*";
+        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6b/Etisalat_Logo.svg";
     } else if (phone.startsWith("012")) {
         name = "أورنج كاش";
         prefix = "*115*1*";
+        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg";
     } else if (phone.startsWith("015")) {
         name = "وي باي";
         prefix = "*322*";
+        logoUrl = "https://upload.wikimedia.org/wikipedia/commons/8/86/Telecom_Egypt_logo.svg";
     }
 
     document.getElementById('netName').innerText = name;
+    document.getElementById('netLogo').src = logoUrl;
 
     function startPay(e) {
         const amt = document.getElementById('amount').value;
