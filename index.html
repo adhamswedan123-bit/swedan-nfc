@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدفع السريع</title>
     <style>
-        body { font-family: Tahoma, sans-serif; background: #f4f6f9; text-align: center; padding: 30px; }
-        .box { background: #fff; padding: 20px; border-radius: 12px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        body { font-family: Tahoma, sans-serif; background: #f4f6f9; text-align: center; padding: 40px; }
+        .box { background: #fff; padding: 25px; border-radius: 12px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h2 { color: #0d6efd; }
-        .phone { font-size: 24px; font-weight: bold; margin: 15px 0; color: #333; }
+        .phone { font-size: 26px; font-weight: bold; margin: 15px 0; color: #333; }
         input { width: 100%; padding: 12px; font-size: 18px; text-align: center; box-sizing: border-box; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; }
-        .btn { display: block; width: 100%; padding: 12px; background: #0d6efd; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        .btn { display: block; width: 100%; padding: 14px; background: #0d6efd; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h2>الدفع السريع - سويدان</h2>
-    <div id="netName" style="font-weight: bold; color: #555;">جاري تحديد الشبكة...</div>
+    <h2>الدفع السريع</h2>
+    <div id="netName" style="font-weight: bold; color: #555; font-size: 16px;">جاري تحديد الشبكة...</div>
     <div class="phone" id="displayPhone">---</div>
 
-    <input type="number" id="amount" placeholder="أدخل مبلغ التحويل" inputmode="numeric">
+    <input type="number" id="amount" placeholder="أدخل مبلغ التحويل بالجنيه" inputmode="numeric">
 
-    <a href="#" id="payBtn" class="btn" onclick="startPay(event)">اتصال بكود الدفع</a>
+    <a href="#" id="payBtn" class="btn" onclick="startPay(event)">فتح شاشة الاتصال</a>
 </div>
 
 <script>
@@ -37,7 +37,7 @@
         name = "فودافون كاش";
         prefix = "*9*7*";
     } else if (phone.startsWith("011")) {
-        name = "اتصالات كاش";
+        name.name = "اتصالات كاش";
         prefix = "*777*1*";
     } else if (phone.startsWith("012")) {
         name = "أورنج كاش";
