@@ -113,4 +113,87 @@
             border-radius: 8px;
             font-size: 12px;
             margin-top: 15px;
-            border: 1px solid #ffe
+            border: 1px solid #ffeeba;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div style="font-size: 13px; color: #6c757d;">الدفع السريع للمحل</div>
+        <div class="store-name">سويدان</div>
+
+        <div class="wallet-box" id="walletBox">
+            <div class="wallet-title" id="walletLabel">جاري تحديد الشبكة...</div>
+            <div class="phone-number" id="storePhone">---</div>
+            <button class="btn btn-copy" onclick="copyData()">نسخ رقم المحفظة</button>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">مبلغ التحويل بالجنيه *</label>
+            <input type="number" id="amount" placeholder="أدخل المبلغ" inputmode="numeric">
+        </div>
+
+        <a href="#" id="dialLink" class="btn btn-dial" onclick="triggerDial(event)">فتح شاشة الاتصال بالكود</a>
+
+        <div class="security-badge">
+            لن يطلب منك هذا الموقع الرقم السري. أدخل الرقم السري فقط داخل خدمة الدفع الرسمية إذا طلبته منك. راجع اسم المستلم والمبلغ قبل التأكيد.
+        </div>
+
+        <div class="note">
+            راجع الكود قبل استخدامه. تأكد من إدخال المبلغ الصحيح قبل الضغط على زر الاتصال.
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let storeNumber = urlParams.get('phone') || "01011617901"; 
+
+        document.getElementById('storePhone').innerText = storeNumber;
+
+        let currentPrefix = "*9*7*";
+        let netName = "محفظة غير معروفة";
+        let boxColor = "#f8f9fa";
+
+        if (storeNumber.startsWith("010")) {
+            netName = "فودافون كاش (Vodafone Cash)";
+            currentPrefix = "*9*7*";
+            boxColor = "#ffe6e6";
+        } else if (storeNumber.startsWith("011")) {
+            netName = "اتصالات كاش (Etisalat Cash)";
+            currentPrefix = "*777*1*";
+            boxColor = "#e6f9ff";
+        } else if (storeNumber.startsWith("012")) {
+            netName = "أورنج كاش (Orange Cash)";
+            currentPrefix = "*115*1*";
+            boxColor = "#fff3e6";
+        } else if (storeNumber.startsWith("015")) {
+            netName = "وي باي (WE Pay)";
+            currentPrefix = "*322*";
+            boxColor = "#f0e6ff";
+        }
+
+        document.getElementById('walletLabel').innerText = netName;
+        document.getElementById('walletBox').style.backgroundColor = boxColor;
+
+        function copyData() {
+            navigator.clipboard.writeText(storeNumber);
+            alert("تم نسخ الرقم: " + storeNumber);
+        }
+
+        function triggerDial(e) {
+            const amount = document.getElementById('amount').value;
+            if (!amount) {
+                alert("يرجى إدخال مبلغ التحويل أولاً!");
+                e.preventDefault();
+                return;
+            }
+
+            let ussdCode = `${currentPrefix}${storeNumber}*${amount}#`;
+            const encodedUssd = ussdCode.replace(/#/g, "%23");
+            document.getElementById('dialLink').href = `tel:${encodedUssd}`;
+        }
+    </script>
+
+</body>
+</html>
