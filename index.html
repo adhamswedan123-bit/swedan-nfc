@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدفع للمحل - سويدان</title>
+    <title>الدفع السريع - سويدان</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,26 +29,28 @@
             font-size: 26px;
             font-weight: bold;
             color: #0056b3;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .wallet-box {
             background: #f8f9fa;
-            border: 1px solid #dee2e6;
+            border: 2px solid #dee2e6;
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 20px;
+            transition: 0.3s;
         }
         .wallet-title {
-            font-size: 14px;
-            color: #6c757d;
+            font-size: 15px;
+            font-weight: bold;
+            color: #495057;
             margin-bottom: 8px;
         }
         .phone-number {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             letter-spacing: 1px;
             color: #212529;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .btn {
             display: block;
@@ -92,30 +94,11 @@
         .btn-dial {
             background-color: #0d6efd;
             color: white;
+            padding: 15px;
+            font-size: 18px;
         }
         .btn-dial:active {
             background-color: #0b5ed7;
-        }
-        .networks-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        .net-btn {
-            padding: 10px;
-            border: 2px solid #dee2e6;
-            background: #fff;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-        .net-btn.active {
-            border-color: #0d6efd;
-            background-color: #e7f1ff;
-            color: #0d6efd;
         }
         .note {
             font-size: 12px;
@@ -130,93 +113,4 @@
             border-radius: 8px;
             font-size: 12px;
             margin-top: 15px;
-            border: 1px solid #ffeeba;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div style="font-size: 13px; color: #6c757d;">الدفع للمحل</div>
-        <div class="store-name">سويدان</div>
-
-        <div class="networks-container">
-            <button class="net-btn active" onclick="setNetwork('vodafone', '*9*7*')">فودافون كاش</button>
-            <button class="net-btn" onclick="setNetwork('etisalat', '*777*1*')">اتصالات كاش</button>
-            <button class="net-btn" onclick="setNetwork('orange', '*115*1*')">أورنج كاش</button>
-            <button class="net-btn" onclick="setNetwork('we', '*322*')">وي باي</button>
-        </div>
-
-        <div class="wallet-box">
-            <div class="wallet-title" id="walletLabel">رقم فودافون كاش</div>
-            <div class="phone-number" id="storePhone">---</div>
-            <button class="btn btn-copy" onclick="copyData()">نسخ رقم المحفظة</button>
-        </div>
-
-        <div class="form-group">
-            <label for="amount">مبلغ التحويل بالجنيه *</label>
-            <input type="number" id="amount" placeholder="أدخل المبلغ" inputmode="numeric">
-        </div>
-
-        <a href="#" id="dialLink" class="btn btn-dial" onclick="triggerDial(event)">فتح شاشة الاتصال بالكود</a>
-
-        <div class="security-badge">
-            لن يطلب منك هذا الموقع الرقم السري. أدخل الرقم السري فقط داخل خدمة الدفع الرسمية إذا طلبته منك. راجع اسم المستلم والمبلغ قبل التأكيد.
-        </div>
-
-        <div class="note">
-            راجع الكود قبل استخدامه. قد لا تدعم بعض الهواتف فتح أكواد الخدمة من رابط.
-        </div>
-    </div>
-
-    <script>
-        // قراءة الرقم من رابط الصفحة تلقائياً
-        const urlParams = new URLSearchParams(window.location.search);
-        let storeNumber = urlParams.get('phone') || "01011617901"; // لو مفيش رقم في اللينك يحط الرقم ده كافتراضي
-
-        document.getElementById('storePhone').innerText = storeNumber;
-
-        let currentPrefix = "*9*7*";
-        let netName = "فودافون كاش";
-
-        function setNetwork(network, prefix) {
-            currentPrefix = prefix;
-            
-            const buttons = document.querySelectorAll('.net-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if(network === 'vodafone') {
-                netName = "فودافون كاش";
-            } else if(network === 'etisalat') {
-                netName = "اتصالات كاش";
-            } else if(network === 'orange') {
-                netName = "أورنج كاش";
-            } else if(network === 'we') {
-                netName = "وي باي";
-            }
-            document.getElementById('walletLabel').innerText = "رقم " + netName;
-        }
-
-        function copyData() {
-            navigator.clipboard.writeText(storeNumber);
-            alert("تم نسخ رقم المحفظة: " + storeNumber);
-        }
-
-        function triggerDial(e) {
-            const amount = document.getElementById('amount').value;
-            if (!amount) {
-                alert("يرجى إدخال مبلغ التحويل أولاً!");
-                e.preventDefault();
-                return;
-            }
-
-            let ussdCode = `${currentPrefix}${storeNumber}*${amount}#`;
-
-            const encodedUssd = ussdCode.replace(/#/g, "%23");
-            document.getElementById('dialLink').href = `tel:${encodedUssd}`;
-        }
-    </script>
-
-</body>
-</html>
+            border: 1px solid #ffe
